@@ -1,8 +1,10 @@
 package com.engine3d.test;
 
 import com.engine3d.core.ILogic;
+import com.engine3d.core.ObjectLoader;
 import com.engine3d.core.RenderManager;
 import com.engine3d.core.WindowManager;
+import com.engine3d.core.entity.Model;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -12,16 +14,48 @@ public class TestGame implements ILogic {
     private float color = 0.0f;
 
     private final RenderManager renderer;
+    private final ObjectLoader loader;
     private final WindowManager window;
+
+    private Model model;
 
     public TestGame() {
         renderer = new RenderManager();
         window = Launcher.getWindow();
+        loader = new ObjectLoader();
     }
 
     @Override
     public void init() throws Exception {
         renderer.init();
+
+//        float[] vertices = {
+//                -0.5f, -0.5f,  // v0
+//                0.5f, -0.5f,  // v1
+//                0.5f,  0.5f,  // v2
+//                -0.5f,  0.5f   // v3
+//        };
+//
+//        int[] indices = {
+//                0, 1, 2,  // First triangle
+//                0, 2, 3   // Second triangle
+//        };
+
+        float[] vertices = {
+                -0.5f, 0.5f, 0f,
+                -0.5f, -0.5f, 0f,
+                0.5f, -0.5f, 0f,
+                0.5f, -0.5f, 0f,
+                0.5f, 0.5f, 0f,
+                -0.5f, 0.5f, 0f
+        };
+
+        int[] indices = {
+                0,1,3,
+                3,1,2
+        };
+
+        model = loader.loadModel(vertices, indices);
     }
 
     @Override
@@ -51,11 +85,12 @@ public class TestGame implements ILogic {
         }
 
         window .setClearColor(color, color, color, 0.0f);
-        renderer.clear();
+        renderer.render(model);
     }
 
     @Override
     public void cleanup() {
         renderer.cleanup();
+        loader.cleanup();
     }
 }
