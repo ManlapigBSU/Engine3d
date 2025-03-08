@@ -4,13 +4,15 @@ import com.engine3d.core.*;
 import com.engine3d.core.entity.Entity;
 import com.engine3d.core.entity.Model;
 import com.engine3d.core.entity.Texture;
+import com.engine3d.core.utils.Consts;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 public class TestGame implements ILogic {
 
-    private static final float CAMERA_MOVE_SPEED = 0.05f;
+    private static final float CAMERA_MOVE_SPEED = 0.1f;
 
     private int direction = 0;
     private float color = 0.0f;
@@ -146,10 +148,15 @@ public class TestGame implements ILogic {
     }
 
     @Override
-    public void update() {
+    public void update(float interval, MouseInput mouseInput) {
         camera.movePosition(cameraInc.x * CAMERA_MOVE_SPEED, cameraInc.y * CAMERA_MOVE_SPEED, cameraInc.z * CAMERA_MOVE_SPEED);
 
-        entity.incRotation(0.0f, 0.5f,0.0f);
+        if(mouseInput.isRightButtonPress()) {
+            Vector2f rotVec = mouseInput.getDisplayVector();
+            camera.moveRotation(rotVec.x * Consts.MOUSE_SENSITIVITY, rotVec.y * Consts.MOUSE_SENSITIVITY, 0);
+        }
+
+        entity.incRotation(0.0f, 0.0f,0.0f);
 //        color += direction * 0.01f;
 //        if(color > 1)
 //            color = 1.0f;

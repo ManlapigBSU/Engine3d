@@ -12,7 +12,7 @@ public class Launcher {
 
     public static void main(String[] args){
         System.out.println(Version.getVersion());
-        window = new WindowManager(Consts.TITLE,900, 900, false);
+        window = new WindowManager(Consts.TITLE,0, 0, false);
         game = new TestGame();
         EngineManager engine = new EngineManager();
         try {
