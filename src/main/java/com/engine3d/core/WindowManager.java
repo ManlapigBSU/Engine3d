@@ -89,8 +89,8 @@ public class WindowManager {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_STENCIL_TEST);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glCullFace(GL11.GL_BACK);
+        //GL11.glEnable(GL11.GL_CULL_FACE);
+        //GL11.glCullFace(GL11.GL_BACK);
 
     }
 
@@ -156,12 +156,12 @@ public class WindowManager {
     }
 
     public Matrix4f updateProjectionMatrix() {
-        float aspectRation = (float) width / height;
-        return projectionMatrix.setPerspective(FOV, aspectRation, Z_NEAR, Z_FAR);
+        float aspectRatio = (float) width / height;
+        return projectionMatrix.setPerspective(FOV, aspectRatio, Z_NEAR, Z_FAR);
     }
 
     public Matrix4f updateProjectionMatrix(Matrix4f matrix, int width, int height) {
-        float aspectRation = (float) width / height;
-        return matrix.setPerspective(FOV, aspectRation, Z_NEAR, Z_FAR);
+        float aspectRatio = (float) width / height;
+        return matrix.setPerspective(FOV, aspectRatio, Z_NEAR, Z_FAR);
     }
 }

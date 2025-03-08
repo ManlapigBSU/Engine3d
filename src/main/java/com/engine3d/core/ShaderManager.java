@@ -14,7 +14,6 @@ public class ShaderManager {
 
     private final int programID;
     private int vertexShaderID, fragmentShaderID;
-
     private final Map<String, Integer> uniforms;
 
     public ShaderManager() throws Exception {
@@ -53,12 +52,12 @@ public class ShaderManager {
         GL20.glUniform1f(uniforms.get(uniformName), res);
     }
 
-    public void setUniform(String uniformname, int value) {
-        GL20.glUniform1i(uniforms.get(uniformname), value);
+    public void setUniform(String uniformName, int value) {
+        GL20.glUniform1i(uniforms.get(uniformName), value);
     }
 
-    public void setUniform(String uniformname, float value) {
-        GL20.glUniform1f(uniforms.get(uniformname), value);
+    public void setUniform(String uniformName, float value) {
+        GL20.glUniform1f(uniforms.get(uniformName), value);
     }
 
     public void createVertexShader(String shaderCode) throws Exception {
