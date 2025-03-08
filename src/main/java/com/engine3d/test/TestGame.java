@@ -21,6 +21,8 @@ public class TestGame implements ILogic {
     private final WindowManager window;
 
     private Entity entity;
+    private GameLogic movement;
+
 
     public TestGame() {
         renderer = new RenderManager();
@@ -65,31 +67,60 @@ public class TestGame implements ILogic {
 
         Model model = loader.loadModel(vertices, textureCoords, indices);
         model.setTexture(new Texture(loader.loadTexture("textures/grassblock.png")));
-        entity = new Entity(model, new Vector3f(1, 0, 0), new Vector3f(0,0,0), 1);
+        entity = new Entity(model, new Vector3f(0, 0, 0), new Vector3f(0,0,0), 1);
+
+        movement = new GameLogic(entity);
     }
 
     @Override
     public void input() {
-        if(window.isKeyPressed(GLFW.GLFW_KEY_UP))
+        if(window.isKeyPressed(GLFW.GLFW_KEY_LEFT))
             direction = 1;
-        else if(window.isKeyPressed(GLFW.GLFW_KEY_DOWN))
+        else if(window.isKeyPressed(GLFW.GLFW_KEY_RIGHT))
             direction = -1;
+        else if (window.isKeyPressed(GLFW.GLFW_KEY_UP))
+            direction = 2;
+        else if (window.isKeyPressed(GLFW.GLFW_KEY_DOWN))
+            direction = -2;
         else
             direction = 0;
     }
 
     @Override
     public void update() {
-        color += direction * 0.01f;
-        if(color > 1)
-            color = 1.0f;
-        else if (color <= 0)
-            color = 0.0f;
-
-        if(entity.getPos().x < -1.5f)
-            entity.getPos().x = 1.5f;
-        entity.getPos().x -=0.01f;
+//        color += direction * 0.01f;
+//        if(color > 1)
+//            color = 1.0f;
+//        else if (color <= 0)
+//            color = 0.0f;
+//
+//        if(entity.getPos().x < -1.5f)
+//            entity.getPos().x = 1.5f;
+//        entity.getPos().x -=0.01f;
+        movement.move(direction);
+        movement.screenWrap();
     }
+
+//    public void screenWrap() {
+//
+//    }
+
+//    public void movement(int direction) {
+//        moveLeft(direction);
+//        MoveRight(direction);
+//        MoveUp(direction);
+//        MoveDown(direction);
+//    }
+//
+//    public void moveLeft(int isPressed) {
+//        if(isPressed == 1)
+//            entity.getPos().x -= 0.01f;
+//    }
+//
+//    public void moveRight(int isPressed) {
+//        if(isPressed == -1)
+//            entity.getPos().x += 0.01f;
+//    }
 
     @Override
     public void render() {

@@ -1,3 +1,4 @@
 # 3dEngine
 
-Edit the "TestGame" class for input and output
+using gldrawarray and 3 point points for vertex.
+returns vertices.lenght in objectloader.loadmodel
