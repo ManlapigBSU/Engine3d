@@ -2,6 +2,7 @@ package com.engine3d.core;
 
 import com.engine3d.core.entity.Entity;
 import com.engine3d.core.entity.Model;
+import com.engine3d.core.utils.Consts;
 import com.engine3d.core.utils.Transformation;
 import com.engine3d.core.utils.Utils;
 import com.engine3d.test.Launcher;
@@ -30,25 +31,36 @@ public class RenderManager {
         shader.createUniform("transformationMatrix");
         shader.createUniform("projectionMatrix");
         shader.createUniform("viewMatrix");
+        shader.createUniform("ambientLight");
+        shader.createMaterialUniform("material");
     }
 
     public void render(Entity entity, Camera camera) {
         clear();
         shader.bind();
 
+        if(window.isResize()) {
+            GL11.glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResize(false);
+        }
+
         shader.setUniform("textureSampler", 0);
         shader.setUniform("transformationMatrix", Transformation.createTransformationMatrix(entity));
         shader.setUniform("projectionMatrix", window.updateProjectionMatrix());
         shader.setUniform("viewMatrix", Transformation.getViewMatrix(camera));
+        shader.setUniform("material", entity.getModel().getMaterial());
+        shader.setUniform("ambientLight", Consts.AMBIENT_LIGHT);
 
         GL30.glBindVertexArray(entity.getModel().getId());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
+        GL20.glEnableVertexAttribArray(2);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, entity.getModel().getTexture().getID());
         GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
         GL20.glDisableVertexAttribArray(0);
         GL20.glDisableVertexAttribArray(1);
+        GL20.glDisableVertexAttribArray(2);
         GL30.glBindVertexArray(0);
         shader.unbind();
     }

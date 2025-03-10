@@ -60,8 +60,8 @@ public class TestGame implements ILogic {
 //        };
 
 
-        Model model = loader.loadOBJ("/models/bunny.obj");
-        model.setTexture(new Texture(loader.loadTexture("textures/dirt.png")));
+        Model model = loader.loadOBJ("/models/mog.obj");
+        model.setTexture(new Texture(loader.loadTexture("textures/dirt.png")), 1f);
         entity = new Entity(model, new Vector3f(0, 0, -5), new Vector3f(0,0,0), 10);
 
         //        movement = new GameLogic(entity);
@@ -121,12 +121,6 @@ public class TestGame implements ILogic {
 
     @Override
     public void render() {
-        if(window.isResize()) {
-            GL11.glViewport(0, 0, window.getWidth(), window.getHeight());
-            window.setResize(false);
-        }
-
-        window .setClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         renderer.render(entity, camera);
     }
 
