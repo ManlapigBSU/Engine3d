@@ -1,4 +1,3 @@
 # 3dEngine
 
-using gldrawarray and 3 point points for vertex.
-returns vertices.lenght in objectloader.loadmodel
+got stuck on how to fix uv textures binding thing
