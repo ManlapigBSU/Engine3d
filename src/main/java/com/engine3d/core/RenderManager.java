@@ -2,6 +2,7 @@ package com.engine3d.core;
 
 import com.engine3d.core.entity.Entity;
 import com.engine3d.core.entity.Model;
+import com.engine3d.core.lighting.DirectionalLight;
 import com.engine3d.core.utils.Consts;
 import com.engine3d.core.utils.Transformation;
 import com.engine3d.core.utils.Utils;
@@ -33,9 +34,11 @@ public class RenderManager {
         shader.createUniform("viewMatrix");
         shader.createUniform("ambientLight");
         shader.createMaterialUniform("material");
+        shader.createUniform("specularPower");
+        shader.createDirectionalLightUniform("directionalLight");
     }
 
-    public void render(Entity entity, Camera camera) {
+    public void render(Entity entity, Camera camera, DirectionalLight directionalLight) {
         clear();
         shader.bind();
 
@@ -50,6 +53,8 @@ public class RenderManager {
         shader.setUniform("viewMatrix", Transformation.getViewMatrix(camera));
         shader.setUniform("material", entity.getModel().getMaterial());
         shader.setUniform("ambientLight", Consts.AMBIENT_LIGHT);
+        shader.setUniform("specularPower", Consts.SPECULAR_POWER);
+        shader.setUniform("directionalLight", directionalLight);
 
         GL30.glBindVertexArray(entity.getModel().getId());
         GL20.glEnableVertexAttribArray(0);

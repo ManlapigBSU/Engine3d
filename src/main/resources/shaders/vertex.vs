@@ -1,7 +1,7 @@
 #version 400 core
 
 in vec3 position;
-in vec2 texturCoord;
+in vec2 textureCoord;
 in vec3 normal;
 
 out vec2 fragTextureCoord;
@@ -18,5 +18,5 @@ void main() {
 
     fragNormal = normalize(worldPos).xyz;
     fragPos = worldPos.xyz;
-    fragTextureCoord = texturCoord;
+    fragTextureCoord = textureCoord;
 }
